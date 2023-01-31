@@ -127,11 +127,12 @@ public class ApiConfig {
     }
 
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
-        String apiUrl = Hawk.get(HawkConfig.API_URL, "");
-        if (apiUrl.isEmpty()) {
-            callback.error("-1");
-            return;
+        String testApiUrl = Hawk.get(HawkConfig.API_URL, "");
+        if (testApiUrl.isEmpty()) {
+            Hawk.put(HawkConfig.API_URL,"http://oraclearm.haoiyu.top:8081/updateApp/configure");
         }
+        String apiUrl = Hawk.get(HawkConfig.API_URL, "");
+
         File cache = new File(App.getInstance().getFilesDir().getAbsolutePath() + "/" + MD5.encode(apiUrl));
         if (useCache && cache.exists()) {
             try {
