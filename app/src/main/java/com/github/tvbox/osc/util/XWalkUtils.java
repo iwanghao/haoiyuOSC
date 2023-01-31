@@ -37,10 +37,6 @@ public class XWalkUtils {
 //        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
         return String.format("http://home.jundie.top:81/xwalk/maven2/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi());
     }
-    public static String ApkDownUrl() {
-//        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
-        return "https://download.mail.qq.com/apk/qqmail_android_6.4.1.10156835.625_55.apk";
-    }
     public static String versionDownUrl() {
 //        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
         return "http://app.haoiyu.cn:8081/updateApp/version.json";

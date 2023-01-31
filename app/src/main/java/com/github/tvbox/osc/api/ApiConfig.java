@@ -129,7 +129,7 @@ public class ApiConfig {
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         String testApiUrl = Hawk.get(HawkConfig.API_URL, "");
         if (testApiUrl.isEmpty()) {
-            Hawk.put(HawkConfig.API_URL,"http://oraclearm.haoiyu.top:8081/updateApp/configure");
+            Hawk.put(HawkConfig.API_URL,"http://app.haoiyu.cn:8081/updateApp/configure");
         }
         String apiUrl = Hawk.get(HawkConfig.API_URL, "");
 
