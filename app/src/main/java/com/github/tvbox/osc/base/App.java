@@ -58,12 +58,17 @@ public class App extends MultiDexApplication {
         // Hawk
         Hawk.init(this).build();
         Hawk.put(HawkConfig.DEBUG_OPEN, false);
-        putDefault(HawkConfig.HOME_REC, 0);       // Home Rec 0=豆瓣, 1=推荐, 2=历史
-        putDefault(HawkConfig.PLAY_TYPE, 1);      // Player   0=系统, 1=IJK, 2=Exo
-        putDefault(HawkConfig.IJK_CODEC, "硬解码");// IJK Render 软解码, 硬解码
-//        putDefault(HawkConfig.HOME_NUM, 2);       // History Number
-//        putDefault(HawkConfig.DOH_URL, 2);        // DNS
-        putDefault(HawkConfig.SEARCH_VIEW, 1);    // Text or Picture
+        putDefault(HawkConfig.HOME_REC, 0);       // 首页推荐 0=豆瓣, 1=推荐, 2=历史
+        putDefault(HawkConfig.PLAY_TYPE, 1);      // 播放器   0=系统, 1=IJK, 2=Exo
+        putDefault(HawkConfig.IJK_CODEC, "硬解码");// IJK 解码方式 软解码, 硬解码
+        putDefault(HawkConfig.DOH_URL, 2);        // DNS  0=关闭  1=腾讯  2=阿里  3=360
+        putDefault(HawkConfig.SEARCH_VIEW, 1);   // 搜索展示 0=列表 1=缩略图
+        putDefault(HawkConfig.HOME_REC_STYLE, true);  //首页多行  false=否 true=是
+        putDefault(HawkConfig.FAST_SEARCH_MODE, true);  // 聚合模式  false=已关闭  true=开启
+        putDefault(HawkConfig.IJK_CACHE_PLAY, true); //IJK缓存   false=已关闭  true=开启
+        putDefault(HawkConfig.HISTORY_NUM, 0); // 历史记录  0=30  1=50  2=70
+        putDefault(HawkConfig.PLAY_SCALE, 0); //画面缩放 0=默认  1=16:9  2=4:3   3=填充 4=原生 5=裁剪
+        putDefault(HawkConfig.SHOW_PREVIEW, true); // 窗口预览 false=已关闭  true=开启
         if (!Hawk.contains(HawkConfig.PLAY_TYPE)) {
             Hawk.put(HawkConfig.PLAY_TYPE, 1);
         }

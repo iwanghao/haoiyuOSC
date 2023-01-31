@@ -593,8 +593,6 @@
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
                 </LinearLayout>
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -678,7 +676,6 @@
                             android:text="搜索附近TVBox"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-
                         <Space
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
