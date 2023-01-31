@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.room.Update;
 
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
@@ -26,6 +27,7 @@ import com.github.tvbox.osc.ui.dialog.ApiDialog;
 import com.github.tvbox.osc.ui.dialog.BackupDialog;
 import com.github.tvbox.osc.ui.dialog.SearchRemoteTvDialog;
 import com.github.tvbox.osc.ui.dialog.SelectDialog;
+import com.github.tvbox.osc.ui.dialog.UpdateInitDialog;
 import com.github.tvbox.osc.ui.dialog.XWalkInitDialog;
 import com.github.tvbox.osc.util.FastClickCheckUtil;
 import com.github.tvbox.osc.util.FileUtils;
@@ -34,7 +36,9 @@ import com.github.tvbox.osc.util.HistoryHelper;
 import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.OkGoHelper;
 import com.github.tvbox.osc.util.PlayerHelper;
+import com.github.tvbox.osc.util.XWalkUtils;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
@@ -42,8 +46,11 @@ import com.orhanobut.hawk.Hawk;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -297,9 +304,6 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 dialog.show();
             }
         });
-
-
-
         findViewById(R.id.llMediaCodec).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -658,7 +662,44 @@ public class ModelSettingFragment extends BaseLazyFragment {
 
             }
         });
+        findViewById(R.id.update).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FastClickCheckUtil.check(v);
+                UpdateInitDialog dialog = new UpdateInitDialog(mContext);
+                    OkGo.<String>post(XWalkUtils.versionDownUrl()).execute(
+                            new AbsCallback<String>() {
+                                @Override
+                                public void onSuccess(Response<String> response) {
+                                    try {
+                                        String String = response.body();
+                                        JSONObject myJsonObject = new JSONObject(String);
+                                        String version = myJsonObject.getJSONObject("result").getString("version");
+                                        if (version.equalsIgnoreCase(XWalkUtils.version())) {
+                                            Toast.makeText(getContext(), "已是最新版本", Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+                                        String url = myJsonObject.getJSONObject("result").getString("url");
+                                        dialog.setUrl(url);
+                                        dialog.setOnListener(new UpdateInitDialog.OnListener() {
+                                            @Override
+                                            public void onchange() {
+                                            }
+                                        });
+                                        dialog.show();
 
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                @Override
+                                public String convertResponse(okhttp3.Response response) throws Throwable {
+                                    return response.body().string();
+                                }
+                            }
+                    );
+            }
+        });
         findViewById(R.id.llIjkCachePlay).setOnClickListener((view -> onClickIjkCachePlay(view)));
         findViewById(R.id.llClearCache).setOnClickListener((view -> onClickClearCache(view)));
     }
@@ -684,7 +725,6 @@ public class ModelSettingFragment extends BaseLazyFragment {
         Toast.makeText(getContext(), "缓存已清空", Toast.LENGTH_LONG).show();
         return;
     }
-
 
     public static SearchRemoteTvDialog loadingSearchRemoteTvDialog;
     public static List<String> remoteTvHostList;

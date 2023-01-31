@@ -2,7 +2,12 @@ package com.github.tvbox.osc.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
 
 import org.xwalk.core.XWalkInitializer;
 
@@ -32,7 +37,19 @@ public class XWalkUtils {
 //        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
         return String.format("http://home.jundie.top:81/xwalk/maven2/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi());
     }
+    public static String ApkDownUrl() {
+//        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
+        return "https://download.mail.qq.com/apk/qqmail_android_6.4.1.10156835.625_55.apk";
+    }
+    public static String versionDownUrl() {
+//        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
+        return "http://app.haoiyu.cn:8081/updateApp/version.json";
+    }
 
+    public static String version() {
+//        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
+        return "111";
+    }
     public static String saveZipFile() {
         return String.format("crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi());
     }
@@ -205,5 +222,35 @@ public class XWalkUtils {
         // XWalkEnvironment.getExtractedCoreDir
         return context.getDir(/*XWALK_CORE_EXTRACTED_DIR*/"extracted_xwalkcore", Context.MODE_PRIVATE).getAbsolutePath();
     }
+
+    static final String FileProviderString = ".fileprovider";
+    /**
+     * 安装APK内容
+     */
+    public static void installAPK(Context context,String saveFileName) {
+        Intent intent_apk;
+        Uri apkUri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            apkUri = FileProvider.getUriForFile(context, context.getPackageName() + FileProviderString, new File(saveFileName));
+            intent_apk = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+            intent_apk.setData(apkUri);
+            intent_apk.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            apkUri = Uri.fromFile(new File(saveFileName));
+            intent_apk = new Intent(Intent.ACTION_VIEW);
+            intent_apk.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        context.startActivity(intent_apk);
+
+/*
+        File apkFile = new File(saveFileName);
+        if (!apkFile.exists()) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+        context.startActivity(intent);*/
+    };
 
 }
