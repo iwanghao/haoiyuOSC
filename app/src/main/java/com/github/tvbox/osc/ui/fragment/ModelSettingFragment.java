@@ -168,6 +168,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
                 AboutDialog dialog = new AboutDialog(mActivity);
+
                 dialog.show();
             }
         });
@@ -680,7 +681,10 @@ public class ModelSettingFragment extends BaseLazyFragment {
                                             return;
                                         }
                                         String url = myJsonObject.getJSONObject("result").getString("url");
+                                        dialog.setVersion(version);
                                         dialog.setUrl(url);
+                                        String content = myJsonObject.getJSONObject("result").getString("content");
+                                        dialog.setContent(content);
                                         dialog.setOnListener(new UpdateInitDialog.OnListener() {
                                             @Override
                                             public void onchange() {

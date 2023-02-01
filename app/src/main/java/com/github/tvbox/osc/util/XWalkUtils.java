@@ -44,7 +44,7 @@ public class XWalkUtils {
 
     public static String version() {
 //        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
-        return "111";
+        return "1.1.3";
     }
     public static String saveZipFile() {
         return String.format("crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi());

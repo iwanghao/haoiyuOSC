@@ -20,9 +20,20 @@
             android:gravity="center"
             android:lineSpacingExtra="@dimen/ts_50"
             android:lineSpacingMultiplier="0"
-            android:text="发现新版本"
+            android:text="发现新版本1"
             android:textColor="@color/color_CC000000"
             android:textSize="@dimen/ts_24" />
+
+        <TextView
+            android:id="@+id/updateContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:lineSpacingExtra="@dimen/ts_50"
+            android:lineSpacingMultiplier="0"
+            android:text="1111"
+            android:textColor="@color/color_CC000000"
+            android:textSize="@dimen/ts_24"/>
 
         <TextView
             android:id="@+id/updateDown"
@@ -34,19 +45,6 @@
             android:focusable="true"
             android:gravity="center"
             android:text="下载更新"
-            android:textColor="@color/color_FFFFFF"
-            android:textSize="@dimen/ts_26" />
-
-        <TextView
-            android:id="@+id/updateCancel"
-            android:layout_width="@dimen/vs_300"
-            android:layout_height="@dimen/vs_40"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/vs_30"
-            android:background="@color/color_6C3D3D3D"
-            android:focusable="true"
-            android:gravity="center"
-            android:text="取消更新"
             android:textColor="@color/color_FFFFFF"
             android:textSize="@dimen/ts_26" />
     </LinearLayout>

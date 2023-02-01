@@ -38,23 +38,22 @@ public class UpdateInitDialog extends BaseDialog {
     public void setUrl(String url) {
         this.url = url;
     }
-
+    //设置版本内容
+    public void setVersion(String version) {
+        TextView downText = findViewById(R.id.updateText);
+        downText.setText("已有新版本: haoiyu "+version);
+    }
+    //设置更新内容
+    public void setContent(String content) {
+        TextView contentText = findViewById(R.id.updateContent);
+        contentText.setText(content);
+    }
     public UpdateInitDialog(@NonNull @NotNull Context context) {
         super(context);
         setCanceledOnTouchOutside(false);
         setCancelable(true);
         setContentView(R.layout.dialog_update);
-        TextView downText = findViewById(R.id.updateText);
         TextView updateDown = findViewById(R.id.updateDown);
-        TextView updateCancel = findViewById(R.id.updateCancel);
-        updateCancel.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                FastClickCheckUtil.check(v);
-                dismiss();
-            }
-        });
-
         updateDown.setOnClickListener(new View.OnClickListener() {
             private void setTextEnable(boolean enable) {
                 updateDown.setEnabled(enable);
@@ -64,7 +63,7 @@ public class UpdateInitDialog extends BaseDialog {
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
                 setTextEnable(false);
-                OkGo.<File>post(url).execute(new FileCallback(context.getCacheDir().getAbsolutePath(),"1.apk") {
+                OkGo.<File>get(url).execute(new FileCallback(context.getCacheDir().getAbsolutePath(),"1.apk") {
                     @Override
                     public void onSuccess(Response<File> response) {
                         try {
