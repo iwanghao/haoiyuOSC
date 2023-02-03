@@ -16,6 +16,6 @@ public class AboutDialog extends BaseDialog {
         super(context);
         setContentView(R.layout.dialog_about);
         TextView Version = findViewById(R.id.setVersion);
-        Version.setText("当前版本: haoiyu "+ XWalkUtils.version());
+        Version.setText("当前版本: haoiyu "+ XWalkUtils.version(context));
     }
 }

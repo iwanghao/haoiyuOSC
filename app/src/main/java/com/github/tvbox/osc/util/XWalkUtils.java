@@ -3,6 +3,8 @@ package com.github.tvbox.osc.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.widget.Toast;
@@ -42,9 +44,17 @@ public class XWalkUtils {
         return "http://app.haoiyu.cn:8081/updateApp/version.json";
     }
 
-    public static String version() {
+    public static String version(Context context) {
+        try {
+            //获得系统版本
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo("com.github.tvbox.osc", 0);
+            String versionName = pi.versionName;
+            return versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "1.1.4";
+        }
 //        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
-        return "1.1.3";
     }
     public static String saveZipFile() {
         return String.format("crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi());
@@ -229,12 +239,14 @@ public class XWalkUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             apkUri = FileProvider.getUriForFile(context, context.getPackageName() + FileProviderString, new File(saveFileName));
             intent_apk = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-            intent_apk.setData(apkUri);
             intent_apk.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent_apk.setDataAndType(apkUri,"application/vnd.android.package-archive");
         } else {
             apkUri = Uri.fromFile(new File(saveFileName));
             intent_apk = new Intent(Intent.ACTION_VIEW);
             intent_apk.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent_apk.setDataAndType(apkUri,"application/vnd.android.package-archive");
+
         }
         context.startActivity(intent_apk);
 

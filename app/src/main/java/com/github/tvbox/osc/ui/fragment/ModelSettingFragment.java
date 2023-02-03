@@ -676,7 +676,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                                         String String = response.body();
                                         JSONObject myJsonObject = new JSONObject(String);
                                         String version = myJsonObject.getJSONObject("result").getString("version");
-                                        if (version.equalsIgnoreCase(XWalkUtils.version())) {
+                                        if (version.equalsIgnoreCase(XWalkUtils.version(getContext()))) {
                                             Toast.makeText(getContext(), "已是最新版本", Toast.LENGTH_LONG).show();
                                             return;
                                         }
