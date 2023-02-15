@@ -19,6 +19,7 @@ import com.github.tvbox.osc.util.AES;
 import com.github.tvbox.osc.util.AdBlocker;
 import com.github.tvbox.osc.util.DefaultConfig;
 import com.github.tvbox.osc.util.HawkConfig;
+import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.MD5;
 import com.github.tvbox.osc.util.VideoParseRuler;
 import com.google.gson.Gson;
@@ -129,7 +130,7 @@ public class ApiConfig {
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         String testApiUrl = Hawk.get(HawkConfig.API_URL, "");
         if (testApiUrl.isEmpty()) {
-            Hawk.put(HawkConfig.API_URL,"http://app.haoiyu.cn:8081/updateApp/configure");
+            Hawk.put(HawkConfig.API_URL,"http://cdn.app.haoiyu.cn/updateApp/configure");
         }
         String apiUrl = Hawk.get(HawkConfig.API_URL, "");
 
@@ -162,6 +163,9 @@ public class ApiConfig {
             configUrl = apiUrl;
         }
         String configKey = TempKey;
+        //上报日志
+        new LOG().setLog(activity,callback,"拉取配置文件");
+        //拉取配置文件
         OkGo.<String>get(configUrl)
                 .headers("User-Agent", userAgent)
                 .headers("Accept", requestAccept)
@@ -185,6 +189,7 @@ public class ApiConfig {
                                 th.printStackTrace();
                             }
                             callback.success();
+
                         } catch (Throwable th) {
                             th.printStackTrace();
                             callback.error("解析配置失败");
