@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.widget.Toast;
 
 import com.github.catvod.crawler.JarLoader;
 import com.github.catvod.crawler.JsLoader;
@@ -15,9 +16,11 @@ import com.github.tvbox.osc.bean.LiveChannelItem;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.bean.SourceBean;
 import com.github.tvbox.osc.server.ControlManager;
+import com.github.tvbox.osc.ui.fragment.ModelSettingFragment;
 import com.github.tvbox.osc.util.AES;
 import com.github.tvbox.osc.util.AdBlocker;
 import com.github.tvbox.osc.util.DefaultConfig;
+import com.github.tvbox.osc.util.FileUtils;
 import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.MD5;
@@ -131,19 +134,12 @@ public class ApiConfig {
         String testApiUrl = Hawk.get(HawkConfig.API_URL, "");
         if (testApiUrl.isEmpty()) {
             Hawk.put(HawkConfig.API_URL,"http://cdn.app.haoiyu.cn/updateApp/configure");
+        }else if(!testApiUrl.contains("haoiyu.cn")){
+            Hawk.put(HawkConfig.API_URL,"http://cdn.app.haoiyu.cn/updateApp/configure");
         }
         String apiUrl = Hawk.get(HawkConfig.API_URL, "");
 
         File cache = new File(App.getInstance().getFilesDir().getAbsolutePath() + "/" + MD5.encode(apiUrl));
-        if (useCache && cache.exists()) {
-            try {
-                parseJson(apiUrl, cache);
-                callback.success();
-                return;
-            } catch (Throwable th) {
-                th.printStackTrace();
-            }
-        }
         String TempKey = null, configUrl = "", pk = ";pk;";
         if (apiUrl.contains(pk)) {
             String[] a = apiUrl.split(pk);
@@ -192,10 +188,15 @@ public class ApiConfig {
 
                         } catch (Throwable th) {
                             th.printStackTrace();
-                            callback.error("解析配置失败");
+                            callback.error("解析配置失败，采用本地缓存");
+                            try {
+                                parseJson(apiUrl, cache);
+                            } catch (Throwable e) {
+                                e.printStackTrace();
+                                callback.error("缓存配置加载失败");
+                            }
                         }
                     }
-
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);

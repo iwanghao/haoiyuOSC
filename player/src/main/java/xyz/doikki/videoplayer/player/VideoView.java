@@ -212,6 +212,27 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
         initPlayer();
         addDisplay();
         startPrepare(false);
+        //定时保存播放进度
+        Thread  thread = new Thread(){
+            @Override
+            public void run(){
+               while (true){
+                   try {
+                       Thread.sleep(10000);
+                       if(isInIdleState()
+                               || isInStartAbortState()){
+                           System.out.println("线程被停止了");
+                           return;
+                       }
+                       saveProgress();
+                       System.out.println("测试播放进度");
+                   } catch (Exception e) {
+                       e.printStackTrace();
+                   }
+               }
+            }
+        };
+        thread.start();
         return true;
     }
 

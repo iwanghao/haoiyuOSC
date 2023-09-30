@@ -585,6 +585,13 @@ public class VodController extends BaseController {
             }
         });
         mNextBtn.setNextFocusLeftId(R.id.play_time_start);
+
+        mPlayTitle1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActivity.finish();
+            }
+        });
     }
 
     private void hideLiveAboutBtn() {
@@ -668,7 +675,7 @@ public class VodController extends BaseController {
 
     public void setTitle(String playTitleInfo) {
         mPlayTitle.setText(playTitleInfo);
-        mPlayTitle1.setText(playTitleInfo);
+        mPlayTitle1.setText("巜 "+playTitleInfo);
     }
 
     public void setUrlTitle(String playTitleInfo) {

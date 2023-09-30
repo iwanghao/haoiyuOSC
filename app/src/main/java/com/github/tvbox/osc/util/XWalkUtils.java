@@ -52,7 +52,7 @@ public class XWalkUtils {
             String versionName = pi.versionName;
             return versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            return "1.1.5";
+            return "1.1.7";
         }
 //        return String.format("https://download.01.org/crosswalk/releases/crosswalk/android/stable/23.53.589.4/%s/crosswalk-apks-23.53.589.4-%s.zip", getRuntimeAbi(), getRuntimeAbi());
     }

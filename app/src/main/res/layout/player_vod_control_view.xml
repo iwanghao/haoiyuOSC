@@ -444,14 +444,26 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_gravity="left"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:paddingLeft="@dimen/vs_20"
+                android:paddingTop="@dimen/vs_20"
+                android:text="http://"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/ts_20" />
+
+            <TextView
                 android:id="@+id/tv_info_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:maxLines="3"
                 android:ellipsize="end"
-                android:paddingTop="@dimen/vs_20"
+                android:maxLines="3"
                 android:paddingLeft="@dimen/vs_20"
+                android:paddingTop="@dimen/vs_20"
                 android:text="http://"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ts_20" />

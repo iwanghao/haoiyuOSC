@@ -59,8 +59,9 @@ public class LOG{
                             String json = response.body();
                             JsonObject infoJson = new Gson().fromJson(json, JsonObject.class);
                             int code = infoJson.get("code").getAsInt();
+                            String message = infoJson.get("message").getAsString();
                             if(code != 2000){
-                                Toast.makeText(activity.getApplicationContext(), "该设备禁止使用10秒后关闭应用", Toast.LENGTH_LONG).show();
+                                Toast.makeText(activity.getApplicationContext(), message+"\n10秒后关闭应用", Toast.LENGTH_LONG).show();
                                 new Thread(() -> {
                                     SystemClock.sleep(10*1000);
                                     android.os.Process.killProcess(android.os.Process.myPid());
